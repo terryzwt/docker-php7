@@ -37,4 +37,5 @@ rm -r memcached && \
 rm /tmp/memcached.tar.gz && \
 docker-php-ext-enable memcached
 
+VOLUME /app/web
 WORKDIR /app/web

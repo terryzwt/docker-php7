@@ -20,8 +20,8 @@ apt-get install -y --no-install-recommends \
     libssl-dev \
     libmcrypt-dev && \
     docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr && \
-    docker-php-ext-install gd pdo_mysql mysqli opcache intl && \
-    docker-php-ext-enable pdo_mysql
+    docker-php-ext-install gd pdo_mysql mysqli opcache intl bcmath zip && \
+    docker-php-ext-enable bcmath zip pdo_mysql
 # Install Memcached
 RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" && \
 mkdir -p memcached && \

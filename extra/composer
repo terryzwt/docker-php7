@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+/usr/bin/env php -d allow_url_fopen=On -d detect_unicode=Off /usr/local/Cellar/composer/1.0.3/libexec/composer.phar "$@"

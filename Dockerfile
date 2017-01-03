@@ -2,6 +2,7 @@ FROM php:7.1-fpm
 
 #drush command
 ADD extra/drush /usr/sbin/drush
+ADD extra/composer /usr/local/sbin/composer
 
 RUN apt-get clean -y
 

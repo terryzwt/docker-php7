@@ -5,7 +5,7 @@ ADD extra/drush /usr/sbin/drush
 ADD extra/composer /usr/local/sbin/composer
 
 RUN apt-get clean -y
-RUN pecl install redis
+RUN pecl install redis -y
 # Install the PHP extensions we need
 RUN apt-get update && \
 apt-get install -y --no-install-recommends \

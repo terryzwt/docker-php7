@@ -39,8 +39,9 @@ rm /tmp/memcached.tar.gz && \
 docker-php-ext-enable memcached
 ##install composer
 # Setup the Composer installer
-RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
-  && curl -o /tmp/composer-setup.sig https://composer.github.io/installer.sig \
-	&& php -r "if (hash('SHA384', file_get_contents('/tmp/composer-setup.php')) !== trim(file_get_contents('/tmp/composer-setup.sig'))) { unlink('/tmp/composer-setup.php'); echo 'Invalid installer' . PHP_EOL; exit(1); }"
+RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
+		&& php composer-setup.php \
+		&& php -r "unlink('composer-setup.php');" \
+		&& mv composer.phar /usr/local/bin/composer
 VOLUME /app/web
 WORKDIR /app/web

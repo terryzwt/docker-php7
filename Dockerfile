@@ -1,9 +1,5 @@
 FROM php:7.1-fpm
 
-#drush command
-ADD extra/drush /usr/sbin/drush
-ADD extra/composer /usr/local/sbin/composer
-
 RUN apt-get clean -y
 RUN pecl install redis -y
 # Install the PHP extensions we need
@@ -37,8 +33,9 @@ tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 && \
 rm -r memcached && \
 rm /tmp/memcached.tar.gz && \
 docker-php-ext-enable memcached
+# drush command
+ADD extra/drush /usr/sbin/drush
 ##install composer
-# Setup the Composer installer
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
 		&& php composer-setup.php \
 		&& php -r "unlink('composer-setup.php');" \

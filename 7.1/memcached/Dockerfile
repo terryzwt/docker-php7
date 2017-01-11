@@ -1,9 +1,5 @@
 FROM php:7.1-fpm
 
-#drush command
-ADD extra/drush /usr/sbin/drush
-ADD extra/composer /usr/local/sbin/composer
-
 RUN apt-get clean -y
 # Install the PHP extensions we need
 RUN apt-get update && \
@@ -36,8 +32,10 @@ tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 && \
 rm -r memcached && \
 rm /tmp/memcached.tar.gz && \
 docker-php-ext-enable memcached
-##install composer
-# Setup the Composer installer
+
+# drush command
+ADD ../../extra/drush /usr/sbin/drush
+# install composer
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
 		&& php composer-setup.php \
 		&& php -r "unlink('composer-setup.php');" \

@@ -13,3 +13,6 @@ tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 && \
 rm -r memcached && \
 rm /tmp/memcached.tar.gz && \
 docker-php-ext-enable memcached
+
+VOLUME /app/web
+WORKDIR /app/web

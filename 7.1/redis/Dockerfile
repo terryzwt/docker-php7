@@ -1,4 +1,5 @@
 FROM php:7.1-fpm
+ENV DRUSH_VERSION 8.1.2
 
 RUN apt-get clean -y
 # Install the PHP extensions we need
@@ -17,9 +18,8 @@ apt-get install -y --no-install-recommends \
     libmcrypt-dev && \
     docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr && \
     docker-php-ext-install gd pdo_mysql mysqli opcache intl bcmath zip && \
-    docker-php-ext-enable bcmath zip pdo_mysql
-RUN pecl install redis -y
-RUN docker-php-ext-enable redis
+    docker-php-ext-enable bcmath zip pdo_mysql 
+RUN pecl install redis -y && docker-php-ext-enable redis
 ##install composer
 # Setup the Composer installer
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
@@ -27,7 +27,8 @@ RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
 		&& php -r "unlink('composer-setup.php');" \
 		&& mv composer.phar /usr/local/bin/composer
 #drush command
-ADD extra/drush /usr/sbin/drush
+RUN curl -fsSL -o /usr/local/bin/drush "https://github.com/drush-ops/drush/releases/download/$DRUSH_VERSION/drush.phar" && \
+  chmod +x /usr/local/bin/drush
 
 VOLUME /app/web
 WORKDIR /app/web

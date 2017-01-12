@@ -1,7 +1,6 @@
 FROM php:7.1-fpm
 
 RUN apt-get clean -y
-RUN pecl install redis -y
 # Install the PHP extensions we need
 RUN apt-get update && \
 apt-get install -y --no-install-recommends \
@@ -18,7 +17,8 @@ apt-get install -y --no-install-recommends \
     libmcrypt-dev && \
     docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr && \
     docker-php-ext-install gd pdo_mysql mysqli opcache intl bcmath zip && \
-    docker-php-ext-enable bcmath zip pdo_mysql redis
+    docker-php-ext-enable bcmath zip pdo_mysql 
+RUN pecl install redis -y && docker-php-ext-enable redis
 # Install Memcached
 RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" && \
 mkdir -p memcached && \
@@ -33,8 +33,9 @@ tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 && \
 rm -r memcached && \
 rm /tmp/memcached.tar.gz && \
 docker-php-ext-enable memcached
-# drush command
-ADD extra/drush /usr/sbin/drush
+#drush command
+RUN curl -fsSL -o /usr/local/bin/drush "https://github.com/drush-ops/drush/releases/download/$DRUSH_VERSION/drush.phar" && \
+  chmod +x /usr/local/bin/drush
 ##install composer
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
 		&& php composer-setup.php \

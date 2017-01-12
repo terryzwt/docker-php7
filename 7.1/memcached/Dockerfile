@@ -34,7 +34,8 @@ rm /tmp/memcached.tar.gz && \
 docker-php-ext-enable memcached
 
 # drush command
-ADD ../../extra/drush /usr/sbin/drush
+RUN curl -fsSL -o /usr/local/bin/drush "https://github.com/drush-ops/drush/releases/download/$DRUSH_VERSION/drush.phar" && \
+  chmod +x /usr/local/bin/drush
 # install composer
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
 		&& php composer-setup.php \

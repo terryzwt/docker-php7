@@ -35,5 +35,7 @@ rm -r memcached && \
 rm /tmp/memcached.tar.gz && \
 docker-php-ext-enable memcached
 
+# Install redis
+RUN pecl install redis -y && docker-php-ext-enable redis
 VOLUME /app/web
 WORKDIR /app/web

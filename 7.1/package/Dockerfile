@@ -18,6 +18,9 @@ docker-php-ext-enable memcached
 # Install redis
 RUN pecl install redis && docker-php-ext-enable redis
 
+# Install xdebug
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
 # Install php-profiler-extension
 RUN curl -L -o /tmp/php-profiler-extension.tar.gz "https://github.com/tideways/php-profiler-extension/archive/master.tar.gz" && \
 mkdir -p php-profiler-extension && \

@@ -24,3 +24,4 @@ docker run -d --name php7-fpm -p:9007:9000 -v /app/web:/app/web zterry95/docker-
 如上命令将开启9007端口作为fpm的端口，修改nginx或者apache的配置，将端口号指向9007，重启nginx或apache即可。
 
 需要注意的是，如果代码不是放置在/app/web目录，nginx或fpm的配置需要相应变更。
+test

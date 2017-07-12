@@ -24,9 +24,9 @@ RUN curl -fsSL -o /usr/local/bin/drush "https://github.com/drush-ops/drush/relea
     chmod +x /usr/local/bin/drush
 
 #drupal command
-RUN ["/bin/bash", "-c", "curl https://drupalconsole.com/installer -L -o drupal.phar && \
+RUN /bin/bash -c 'curl https://drupalconsole.com/installer -L -o drupal.phar && \
       mv drupal.phar /usr/local/bin/drupal && \
-      chmod +x /usr/local/bin/drupal && \"]
+      chmod +x /usr/local/bin/drupal && \'
 
 # install composers
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
@@ -35,12 +35,12 @@ RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
 		&& mv composer.phar /usr/local/bin/composer
 
 # Recreate user with correct params
-RUN ["/bin/bash", "-c", "deluser www-data && \
-      addgroup -g 82 -S www-data && \
-      adduser -u 82 -D -S -s /bin/bash -G www-data www-data && \
-      sed -i '/^www-data/s/!/*/' /etc/shadow"]
+RUN /bin/bash -c 'deluser www-data && \
+    addgroup -g 82 -S www-data && \
+    adduser -u 82 -D -S -s /bin/bash -G www-data www-data && \
+    sed -i '/^www-data/s/!/*/' /etc/shadow'
 
 #change user and group of folder
-RUN ["/bin/bash", "-c", "chown -R www-data:www-data /app/web && \"]
+RUN /bin/bash -c 'chown -R www-data:www-data /app/web && \'
 VOLUME /app/web
 WORKDIR /app/web

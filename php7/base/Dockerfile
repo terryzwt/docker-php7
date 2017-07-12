@@ -23,7 +23,7 @@ apt-get install -y --no-install-recommends \
 RUN curl -fsSL -o /usr/local/bin/drush "https://github.com/drush-ops/drush/releases/download/$DRUSH_VERSION/drush.phar" && \
   chmod +x /usr/local/bin/drush
 #drupal console
-RUN curl https://drupalconsole.com/installer -L -o drupal.phar && \
+RUN curl -fsSL https://drupalconsole.com/installer -L -o drupal.phar && \
     mv drupal.phar /usr/local/bin/drupal && \
     chmod +x /usr/local/bin/drupal && \
 # install composer

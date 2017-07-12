@@ -21,8 +21,12 @@ RUN apt-get update && \
     docker-php-ext-enable bcmath zip pdo_mysql
 # drush command
 RUN curl -fsSL -o /usr/local/bin/drush "https://github.com/drush-ops/drush/releases/download/$DRUSH_VERSION/drush.phar" && \
-  chmod +x /usr/local/bin/drush
+    chmod +x /usr/local/bin/drush
 
+RUN set -ex \
+    && curl https://drupalconsole.com/installer -L -o drupal.phar && \
+    mv drupal.phar /usr/local/bin/drupal && \
+    chmod +x /usr/local/bin/drupal && \
 # install composers
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
 		&& php composer-setup.php \
@@ -30,13 +34,15 @@ RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
 		&& mv composer.phar /usr/local/bin/composer
 
 # Recreate user with correct params
-RUN deluser www-data && \
+RUN set -ex \
+    && deluser www-data && \
     addgroup -g 82 -S www-data && \
     adduser -u 82 -D -S -s /bin/bash -G www-data www-data && \
     sed -i '/^www-data/s/!/*/' /etc/shadow
 
 #change user and group of folder
-RUN chown -R www-data:www-data /app/web && \
+RUN set -ex \
+    && chown -R www-data:www-data /app/web && \
 
 VOLUME /app/web
 WORKDIR /app/web

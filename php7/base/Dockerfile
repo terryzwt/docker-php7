@@ -35,12 +35,12 @@ RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php
 
 # Recreate user with correct params
 RUN deluser www-data && \
-  addgroup -g 82 -S www-data && \
-  adduser -u 82 -D -S -s /bin/bash -G www-data www-data && \
-  sed -i '/^www-data/s/!/*/' /etc/shadow
+    addgroup -g 82 -S www-data && \
+    adduser -u 82 -D -S -s /bin/bash -G www-data www-data && \
+    sed -i '/^www-data/s/!/*/' /etc/shadow
 
 #change user and group of folder
-chown -R www-data:www-data /app/web && \
+RUN chown -R www-data:www-data /app/web && \
 
 VOLUME /app/web
 WORKDIR /app/web

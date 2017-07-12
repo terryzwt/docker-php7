@@ -4,7 +4,7 @@ ENV DRUSH_VERSION 8.1.2
 RUN apt-get clean -y
 # Install the PHP extensions we need
 RUN apt-get update && \
-apt-get install -y --no-install-recommends \
+    apt-get install -y --no-install-recommends \
     curl \
     mysql-client \
     libmemcached-dev \
@@ -23,15 +23,14 @@ apt-get install -y --no-install-recommends \
 RUN curl -fsSL -o /usr/local/bin/drush "https://github.com/drush-ops/drush/releases/download/$DRUSH_VERSION/drush.phar" && \
   chmod +x /usr/local/bin/drush
 #drupal console
-RUN curl -fsSL https://drupalconsole.com/installer -L -o drupal.phar && \
+RUN php -r "readfile('https://drupalconsole.com/installer');" > drupal.phar && \
     mv drupal.phar /usr/local/bin/drupal && \
     chmod +x /usr/local/bin/drupal && \
-# install composer
+# install composers
 RUN php -r "readfile('https://getcomposer.org/installer');" > composer-setup.php \
 		&& php composer-setup.php \
 		&& php -r "unlink('composer-setup.php');" \
 		&& mv composer.phar /usr/local/bin/composer
-    # Recreate user with correct params
 
 # Recreate user with correct params
 RUN deluser www-data && \

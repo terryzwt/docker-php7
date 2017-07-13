@@ -1,4 +1,4 @@
-FROM zterry95/docker-php7:7.1-base
+FROM zterry/php7:base
 
 RUN apt-get clean -y
 RUN apt-get update
@@ -37,5 +37,3 @@ docker-php-ext-enable memcached
 
 # Install redis
 RUN pecl install redis -y && docker-php-ext-enable redis
-VOLUME /app/web
-WORKDIR /app/web

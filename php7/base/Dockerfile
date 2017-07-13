@@ -34,4 +34,6 @@ RUN curl https://drupalconsole.com/installer -L -o drupal.phar && \
     chmod +x /usr/local/bin/drupal
 
 #change user and group of folder
-RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www
+
+WORKDIR /var/www

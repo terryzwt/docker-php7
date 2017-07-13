@@ -1,5 +1,2 @@
-FROM zterry95/docker-php7:7.1-base
+FROM zterry/php7:base
 RUN pecl install redis -y && docker-php-ext-enable redis
-
-VOLUME /app/web
-WORKDIR /app/web
